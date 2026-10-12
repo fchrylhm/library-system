@@ -11,7 +11,6 @@ class BookController extends Controller
     {
         $title = 'Daftar Buku';
         $description = 'Daftar buku yang tersedia di perpustakaan.';
-
         $books = Book::all();
 
         return view('books.index', compact(
@@ -21,8 +20,56 @@ class BookController extends Controller
         ));
     }
 
-    public function show($id)
+    public function create()
     {
-        return "ID Buku : " . $id;
+        return view('books.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'year' => 'required|integer|min:1000|max:9999',
+            'stock' => 'required|integer|min:0',
+        ]);
+
+        Book::create($validated);
+
+        return redirect()->route('books.index')
+            ->with('success', 'Buku berhasil ditambahkan.');
+    }
+
+    public function show(Book $book)
+    {
+        return view('books.show', compact('book'));
+    }
+
+    public function edit(Book $book)
+    {
+        return view('books.edit', compact('book'));
+    }
+
+    public function update(Request $request, Book $book)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'year' => 'required|integer|min:1000|max:9999',
+            'stock' => 'required|integer|min:0',
+        ]);
+
+        $book->update($validated);
+
+        return redirect()->route('books.index')
+            ->with('success', 'Buku berhasil diperbarui.');
+    }
+
+    public function destroy(Book $book)
+    {
+        $book->delete();
+
+        return redirect()->route('books.index')
+            ->with('success', 'Buku berhasil dihapus.');
     }
 }
