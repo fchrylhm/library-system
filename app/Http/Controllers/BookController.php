@@ -28,10 +28,16 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'year' => 'required|integer|min:1000|max:9999',
-            'stock' => 'required|integer|min:0',
+            'title' => 'required|string|min:3|max:255',
+            'author' => [
+                'required',
+                'string',
+                'min:3',
+                'max:255',
+                'regex:/^[\pL\s.\'-]+$/u',
+            ],
+            'year' => 'required|integer|min:1450|max:' . date('Y'),
+            'stock' => 'required|integer|min:0|max:1000',
         ]);
 
         Book::create($validated);
@@ -53,10 +59,16 @@ class BookController extends Controller
     public function update(Request $request, Book $book)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'year' => 'required|integer|min:1000|max:9999',
-            'stock' => 'required|integer|min:0',
+            'title' => 'required|string|min:3|max:255',
+            'author' => [
+                'required',
+                'string',
+                'min:3',
+                'max:255',
+                'regex:/^[\pL\s.\'-]+$/u',
+            ],
+            'year' => 'required|integer|min:1450|max:' . date('Y'),
+            'stock' => 'required|integer|min:0|max:1000',
         ]);
 
         $book->update($validated);

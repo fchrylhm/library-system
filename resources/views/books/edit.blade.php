@@ -16,6 +16,8 @@
                 id="title"
                 name="title"
                 value="{{ old('title', $book->title) }}"
+                minlength="3"
+                maxlength="255"
                 required
             >
             @error('title')
@@ -30,6 +32,8 @@
                 id="author"
                 name="author"
                 value="{{ old('author', $book->author) }}"
+                minlength="3"
+                maxlength="255"
                 required
             >
             @error('author')
@@ -43,8 +47,8 @@
                 type="number"
                 id="year"
                 name="year"
-                min="1000"
-                max="9999"
+                min="1450"
+                max="{{ date('Y') }}"
                 value="{{ old('year', $book->year) }}"
                 required
             >
@@ -60,6 +64,7 @@
                 id="stock"
                 name="stock"
                 min="0"
+                max="1000"
                 value="{{ old('stock', $book->stock) }}"
                 required
             >
