@@ -23,6 +23,7 @@
                 <th>No.</th>
                 <th>Judul Buku</th>
                 <th>Penulis</th>
+                <th>Kategori</th>
                 <th>Tahun Terbit</th>
                 <th>Stok</th>
                 <th>Aksi</th>
@@ -35,6 +36,9 @@
                     <td>{{ $book->id }}</td>
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author }}</td>
+                    <td>
+                        {{ $book->category?->name ?? 'Belum ada kategori' }}
+                    </td>
                     <td>{{ $book->year }}</td>
                     <td>{{ $book->stock }}</td>
                     <td>
@@ -61,7 +65,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" style="text-align: center;">
+                    <td colspan="7" style="text-align: center;">
                         Belum ada data buku.
                     </td>
                 </tr>
